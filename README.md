@@ -19,7 +19,7 @@ gem "github-pages", group: :jekyll_plugins
 
 The content of this directory can now be pushed to GitHub and served/previewed locally as described next.
 
-## How to locally serve/preview a GitHub Pages site using this Docker image
+## How to locally serve/preview a GitHub Pages site
 
 From the local clone of a repo that uses GitHub Pages, run
 ```bash
