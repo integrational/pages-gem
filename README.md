@@ -16,6 +16,10 @@ then strip-down `Gemfile` to
 source "https://rubygems.org"
 gem "github-pages", group: :jekyll_plugins
 ```
+and refine `_config.yml` as follows:
+
+- remove `description` because it's taken from the GitHub repo by default
+- set `baseurl: "/repo"` if `repo` is the name of the GitHub repo
 
 The content of this directory can now be pushed to GitHub and served/previewed locally as described next.
 
@@ -23,10 +27,19 @@ The content of this directory can now be pushed to GitHub and served/previewed l
 
 From the local clone of a repo that uses GitHub Pages, run
 ```bash
-docker run --name gh-pages --rm -it       \
-  -p 4000:4000                            \
-  -v $(pwd):/src/site                     \
-  integrational/gh-pages                  \
-  bundle update && bundle exec jekyll serve
+docker run --name gh-pages --rm -it                    \
+  -p 4000:4000                                         \
+  -v $(pwd):/src/site                                  \
+  integrational/gh-pages                               \
+  bundle update && bundle exec jekyll serve --baseurl ''
 ```
 then browse to <http://127.0.0.1:4000>.
+
+## How to set relative links in the content of a GitHub Pages site
+
+The above instructions combine the setting of `baseurl` in `_config.yml` with overriding it with `--baseurl ''` when serving locally.
+
+[This post](https://github.com/jekyll/jekyll/issues/332#issuecomment-18952908) explains this approach and specifies how to construct links in the site content. In short:
+
+- `{{ site.baseurl }}/path/to/css.css`
+- `{{ site.baseurl }}{{ post.url }}`
